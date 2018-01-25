@@ -12,22 +12,18 @@ class Example(QMainWindow):
         
     def initUI(self):   
 
-        
+        exitAct = QAction(QIcon('Exit.PNG'), 'Exit', self)
+        exitAct.setShortcut('Ctrl+Q')
+        exitAct.triggered.connect(qApp.quit)
+
+        self.toolbar = self.addToolBar('Exit')
+        self.toolbar.addAction(exitAct)
+
         self.setGeometry(300, 300, 300, 200)
-        self.setWindowTitle('Context menu')    
+        self.setWindowTitle('Toolbar')    
         self.show()
     
-    def contextMenuEvent(self, event): #此方法继承父类，实现右键菜单
-
-        cmenu = QMenu(self)
-
-        newAct = cmenu.addAction("New")
-        opnAct = cmenu.addAction("Open")
-        quitAct = cmenu.addAction("Quit")
-        action = cmenu.exec_(self.mapToGlobal(event.pos())) #exec_显示菜单，从鼠标右键获取事件对象的当前坐标
-
-        if action == quitAct:
-            qApp.quit()
+    
     
 if __name__ == '__main__':
     
