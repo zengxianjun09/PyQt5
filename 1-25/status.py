@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, QMenu
+from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, QMenu, qApp
 from PyQt5.QtGui import QIcon
 
 class Example(QMainWindow):
@@ -12,31 +12,22 @@ class Example(QMainWindow):
         
     def initUI(self):   
 
-        self.statusbar = self.statusBar()
-        self.statusbar.showMessage('Ready')
-
-        # 建立一级菜单 File
-        menubar = self.menuBar()
-        viewMenu = menubar.addMenu('View')
-       
-
-        viewStatAct = QAction('View statusbar', self, checkable=True)
-        viewStatAct.setStatusTip('View statusbar')
-        viewStatAct.setChecked(False) #显示是否默认打钩
-        viewStatAct.triggered.connect(self.toggleMenu) # ！！是否打钩连接至这个方法，作为此方法的形参
-
-        viewMenu.addAction(viewStatAct)
         
         self.setGeometry(300, 300, 300, 200)
-        self.setWindowTitle('Check menu')    
+        self.setWindowTitle('Context menu')    
         self.show()
     
-    def toggleMenu(self, state):
+    def contextMenuEvent(self, event): #此方法继承父类，实现右键菜单
 
-        if state:
-            self.statusbar.show()
-        else:
-            self.statusbar.hide()
+        cmenu = QMenu(self)
+
+        newAct = cmenu.addAction("New")
+        opnAct = cmenu.addAction("Open")
+        quitAct = cmenu.addAction("Quit")
+        action = cmenu.exec_(self.mapToGlobal(event.pos())) #exec_显示菜单，从鼠标右键获取事件对象的当前坐标
+
+        if action == quitAct:
+            qApp.quit()
     
 if __name__ == '__main__':
     
