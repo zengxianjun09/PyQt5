@@ -12,23 +12,31 @@ class Example(QMainWindow):
         
     def initUI(self):   
 
+        self.statusbar = self.statusBar()
+        self.statusbar.showMessage('Ready')
+
         # 建立一级菜单 File
         menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
+        viewMenu = menubar.addMenu('View')
+       
 
-        impMenu = QMenu('Import', self) # 新二级菜单名字叫Import
-        impAct = QAction('Import mail', self) # 建立二级菜单里面的动作 Import mail
-        impMenu.addAction(impAct) #把动作添加到二级菜单里面
+        viewStatAct = QAction('View statusbar', self, checkable=True)
+        viewStatAct.setStatusTip('View statusbar')
+        viewStatAct.setChecked(False) #显示是否默认打钩
+        viewStatAct.triggered.connect(self.toggleMenu) # ！！是否打钩连接至这个方法，作为此方法的形参
 
-        newAct = QAction('New', self) # 一级菜单动作NEW
-
-        fileMenu.addAction(newAct) # 添加一级菜单里面的动作1
-        fileMenu.addMenu(impMenu) # 添加一级菜单里面的新菜单
+        viewMenu.addAction(viewStatAct)
         
         self.setGeometry(300, 300, 300, 200)
-        self.setWindowTitle('Submenu')    
+        self.setWindowTitle('Check menu')    
         self.show()
     
+    def toggleMenu(self, state):
+
+        if state:
+            self.statusbar.show()
+        else:
+            self.statusbar.hide()
     
 if __name__ == '__main__':
     
