@@ -1,6 +1,6 @@
 import sys
-from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout,
-QVBoxLayout, QApplication)
+from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QGridLayout,
+QTextEdit, QApplication)
 
 class Example(QWidget):
     
@@ -12,27 +12,31 @@ class Example(QWidget):
         
     def initUI(self):   
 
-        grid = QGridLayout()
-        self.setLayout(grid)
+       title = QLabel('Tietle')
+       author = QLabel('Author')
+       review = QLabel('Review')
 
-        names = ['Cls', 'Bck', '', 'Close',
-                '7', '8','9','/',
-                '4', '5', '6', '*',
-                '1', '2', '3', '-',
-                '0', '.', '=', '+']
+       titleEdit = QLineEdit()
+       authorEdit = QLineEdit()
+       reviewEdit = QLineEdit()
 
-        positions = [(i,j) for i in range(5) for j in range(4)]
+       grid = QGridLayout()
+       grid.setSpacing(10)
 
-        for position, name in zip(positions, names):
+       grid.addWidget(title, 1, 0)
+       grid.addWidget(titleEdit, 1, 1)
 
-            if name == '':
-                continue
-            button = QPushButton(name)
-            grid.addWidget(button, *position)
+       grid.addWidget(author, 2, 0)
+       grid.addWidget(authorEdit, 2, 1)
 
-        self.move(300, 150)
-        self.setWindowTitle('Calculator')    
-        self.show()
+       grid.addWidget(review, 3, 0)
+       grid.addWidget(reviewEdit, 3, 1, 5, 0)
+
+       self.setLayout(grid)
+
+       self.setGeometry(300,300, 350, 300)
+       self.setWindowTitle('Review')    
+       self.show()
     
     
     
