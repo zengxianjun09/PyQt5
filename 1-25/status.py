@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import (QWidget, QPushButton, QHBoxLayout,
+from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout,
 QVBoxLayout, QApplication)
 
 class Example(QWidget):
@@ -12,22 +12,26 @@ class Example(QWidget):
         
     def initUI(self):   
 
-        okButton = QPushButton("OK") #建立ok 和 cancel 按钮
-        cancelButton = QPushButton("Cancel")
+        grid = QGridLayout()
+        self.setLayout(grid)
 
-        hbox = QHBoxLayout() #建立水平布局
-        hbox.addStretch(1)  #在按钮之间增加弹性空间
-        hbox.addWidget(okButton) #把元素放在应用的右下角
-        hbox.addWidget(cancelButton)
+        names = ['Cls', 'Bck', '', 'Close',
+                '7', '8','9','/',
+                '4', '5', '6', '*',
+                '1', '2', '3', '-',
+                '0', '.', '=', '+']
 
-        vbox = QVBoxLayout()
-        vbox.addStretch(1)
-        vbox.addLayout(hbox) #把水平布局放置到垂直布局盒里面
+        positions = [(i,j) for i in range(5) for j in range(4)]
 
-        self.setLayout(vbox)
+        for position, name in zip(positions, names):
 
-        self.setGeometry(300, 300, 300, 150)
-        self.setWindowTitle('Buttons')    
+            if name == '':
+                continue
+            button = QPushButton(name)
+            grid.addWidget(button, *position)
+
+        self.move(300, 150)
+        self.setWindowTitle('Calculator')    
         self.show()
     
     
