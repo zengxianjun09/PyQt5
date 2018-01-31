@@ -1,8 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QLabel,QMainWindow, QApplication, QAction, QMenu, QTextEdit
-from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import (QWidget, QPushButton, QHBoxLayout,
+QVBoxLayout, QApplication)
 
-class Example(QMainWindow):
+class Example(QWidget):
     
     def __init__(self):
         super().__init__()
@@ -12,17 +12,22 @@ class Example(QMainWindow):
         
     def initUI(self):   
 
-        lbl1 = QLabel('Zetcode', self) #建立标签
-        lbl1.move(15, 10)   #定位X,Y坐标
+        okButton = QPushButton("OK") #建立ok 和 cancel 按钮
+        cancelButton = QPushButton("Cancel")
 
-        lbl2 = QLabel('tutorials', self)
-        lbl2.move(35, 40)
+        hbox = QHBoxLayout() #建立水平布局
+        hbox.addStretch(1)  #在按钮之间增加弹性空间
+        hbox.addWidget(okButton) #把元素放在应用的右下角
+        hbox.addWidget(cancelButton)
 
-        lbl3 = QLabel('for programmers', self)
-        lbl3.move(55, 70)
+        vbox = QVBoxLayout()
+        vbox.addStretch(1)
+        vbox.addLayout(hbox) #把水平布局放置到垂直布局盒里面
 
-        self.setGeometry(300, 300, 250, 150)
-        self.setWindowTitle('Absolute')    
+        self.setLayout(vbox)
+
+        self.setGeometry(300, 300, 300, 150)
+        self.setWindowTitle('Buttons')    
         self.show()
     
     
