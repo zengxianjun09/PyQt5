@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, QMenu, QTextEdit
+from PyQt5.QtWidgets import QWidget, QLabel,QMainWindow, QApplication, QAction, QMenu, QTextEdit
 from PyQt5.QtGui import QIcon
 
 class Example(QMainWindow):
@@ -12,25 +12,17 @@ class Example(QMainWindow):
         
     def initUI(self):   
 
-        textEdit = QTextEdit()
-        self.setCentralWidget(textEdit)
+        lbl1 = QLabel('Zetcode', self) #建立标签
+        lbl1.move(15, 10)   #定位X,Y坐标
 
-        exitAct = QAction(QIcon('Exit.PNG'), 'Exit', self)
-        exitAct.setShortcut('Ctrl+Q')
-        exitAct.setStatusTip('Exit application')
-        exitAct.triggered.connect(self.close)
+        lbl2 = QLabel('tutorials', self)
+        lbl2.move(35, 40)
 
-        self.statusBar()
+        lbl3 = QLabel('for programmers', self)
+        lbl3.move(55, 70)
 
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
-        fileMenu.addAction(exitAct)
-
-        self.toolbar = self.addToolBar('Exit')
-        self.toolbar.addAction(exitAct)
-
-        self.setGeometry(300, 300, 300, 200)
-        self.setWindowTitle('Toolbar')    
+        self.setGeometry(300, 300, 250, 150)
+        self.setWindowTitle('Absolute')    
         self.show()
     
     
