@@ -13,19 +13,14 @@ class Example(QWidget):
         
     def initUI(self):   
 
-       lcd = QLCDNumber(self) #建立数码管数字
-       sld = QSlider(Qt.Horizontal, self) #平行的滑块
-
-       vbox = QVBoxLayout() #建立箱子布局
-       vbox.addWidget(lcd) #将数码管和滑块加入到箱子里面
-       vbox.addWidget(sld)
-
-       self.setLayout(vbox) #设置布局
-       sld.valueChanged.connect(lcd.display)#滑块变化带动数码管数字显示改动
-
        self.setGeometry(300,300, 250, 150) 
-       self.setWindowTitle('Signal and slot')    
+       self.setWindowTitle('Event handler')    
        self.show()
+
+    def keyPressEvent(self, e):
+
+        if e.key() == Qt.Key_Escape:
+            self.close()
     
     
     
