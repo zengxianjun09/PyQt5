@@ -1,7 +1,11 @@
 import sys
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal, QObject
 from PyQt5.QtWidgets import (QWidget, QMainWindow, QPushButton,
 QVBoxLayout, QApplication)
+
+class Communicate(QObject):  #发送事件信号 QObject
+    
+    closeApp = pyqtSignal() #建立信号
 
 class Example(QMainWindow):
     
@@ -13,25 +17,16 @@ class Example(QMainWindow):
         
     def initUI(self):   
 
-      btn1 = QPushButton('Button 1', self)
-      btn1.move(30, 50)
-
-      btn2 = QPushButton('Button 2', self)
-      btn2.move(150, 50)
-
-      btn1.clicked.connect(self.buttonClicked)
-      btn2.clicked.connect(self.buttonClicked)
-
-      self.statusBar()
+      self.c = Communicate()
+      self.c.closeApp.connect(self.close) #信号与关闭命令绑定
 
       self.setGeometry(300, 300, 290, 150)
-      self.setWindowTitle('Event sender')
+      self.setWindowTitle('Emit signal')
       self.show()
 
-    def buttonClicked(self):
+    def mousePressEvent(self, event): #鼠标按下触发关闭信号 
 
-        sender = self.sender()
-        self.statusBar().showMessage(sender.text() + ' was pressed')
+        self.c.closeApp.emit()
     
 
 if __name__ == '__main__':
