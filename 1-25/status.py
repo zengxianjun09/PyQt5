@@ -1,6 +1,7 @@
 import sys
-from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QGridLayout,
-QTextEdit, QApplication)
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (QWidget, QLCDNumber, QSlider,
+QVBoxLayout, QApplication)
 
 class Example(QWidget):
     
@@ -12,30 +13,18 @@ class Example(QWidget):
         
     def initUI(self):   
 
-       title = QLabel('Tietle')
-       author = QLabel('Author')
-       review = QLabel('Review')
+       lcd = QLCDNumber(self) #建立数码管数字
+       sld = QSlider(Qt.Horizontal, self) #平行的滑块
 
-       titleEdit = QLineEdit()
-       authorEdit = QLineEdit()
-       reviewEdit = QLineEdit()
+       vbox = QVBoxLayout() #建立箱子布局
+       vbox.addWidget(lcd) #将数码管和滑块加入到箱子里面
+       vbox.addWidget(sld)
 
-       grid = QGridLayout()
-       grid.setSpacing(10)
+       self.setLayout(vbox) #设置布局
+       sld.valueChanged.connect(lcd.display)#滑块变化带动数码管数字显示改动
 
-       grid.addWidget(title, 1, 0)
-       grid.addWidget(titleEdit, 1, 1)
-
-       grid.addWidget(author, 2, 0)
-       grid.addWidget(authorEdit, 2, 1)
-
-       grid.addWidget(review, 3, 0)
-       grid.addWidget(reviewEdit, 3, 1, 5, 0)
-
-       self.setLayout(grid)
-
-       self.setGeometry(300,300, 350, 300)
-       self.setWindowTitle('Review')    
+       self.setGeometry(300,300, 250, 150) 
+       self.setWindowTitle('Signal and slot')    
        self.show()
     
     
