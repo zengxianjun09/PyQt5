@@ -1,9 +1,9 @@
 import sys
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QWidget, QGridLayout, QLabel,
+from PyQt5.QtWidgets import (QWidget, QMainWindow, QPushButton,
 QVBoxLayout, QApplication)
 
-class Example(QWidget):
+class Example(QMainWindow):
     
     def __init__(self):
         super().__init__()
@@ -13,33 +13,26 @@ class Example(QWidget):
         
     def initUI(self):   
 
-      grid = QGridLayout()
-      grid.setSpacing(10)
+      btn1 = QPushButton('Button 1', self)
+      btn1.move(30, 50)
 
-      x = 0
-      y = 0
+      btn2 = QPushButton('Button 2', self)
+      btn2.move(150, 50)
 
-      self.text = "x: {0}, y: {1}".format(x, y)
+      btn1.clicked.connect(self.buttonClicked)
+      btn2.clicked.connect(self.buttonClicked)
 
-      self.label = QLabel(self.text, self)
-      grid.addWidget(self.label, 0, 0, Qt.AlignTop)
+      self.statusBar()
 
-      self.setMouseTracking(True)
-
-      self.setLayout(grid)
-
-      self.setGeometry(300, 300, 350, 200)
-      self.setWindowTitle('Event object')
+      self.setGeometry(300, 300, 290, 150)
+      self.setWindowTitle('Event sender')
       self.show()
+
+    def buttonClicked(self):
+
+        sender = self.sender()
+        self.statusBar().showMessage(sender.text() + ' was pressed')
     
-
-    def mouseMoveEvent(self, e):
-
-        x = e.x()
-        y = e.y()
-
-        text = "x: {0}, y: {1}".format(x, y)
-        self.label.setText(text)
 
 if __name__ == '__main__':
     
